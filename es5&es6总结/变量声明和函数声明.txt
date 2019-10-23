@@ -1,0 +1,76 @@
+0、提升：
+	函数声明和变量声明会从它们在代码中出现的位置被移动到当前作用域的最上方进行执行，这个过程叫做提升
+1、
+	a = 1;
+	var a;
+	console.log(a);
+
+  相当于
+	var a;
+	a = 1;
+	console.log(a);
+	----输出1
+
+2、
+	console.log(b);
+	var b = 1;
+
+  相当于
+	var b;
+	console.log(b);
+	b = 1;
+	----输出undefined
+
+JS编译器会将var b = 1;拆为两段，即var b;和b = 1; 而var b;这个声明会在编译阶段执行，b = 1这个赋值声明会在原地等待传统意义上的从上到下的执行。
+
+3、函数提升
+	info();
+	function info(){
+		var c = 3;
+		console.log(c);
+	}
+
+  相当于
+  	function info(){
+  		var c = 3;
+  		console.log(c);
+  	}
+  	info();
+  	----输出3
+
+4、函数表达式的提升
+	foo();
+	var foo = function test(){
+		var d = 4;
+		console.log(d)
+	}
+  
+  相当于
+  	var foo;
+  	foo();
+  	foo = function test(){
+  		var d = 4;
+  		console.log(d);
+  	}
+
+5、函数优先
+	var xpf = function(){
+	    console.log(2);
+	}
+	function xpf (){
+	    console.log(1);
+	}
+	xpf();
+  
+  相当于
+  	function xpf(){
+  		console.log(1);
+  	}
+  	var xpf;
+  	xpf = function(){
+  		console.log(2);
+  	}
+  	xpf();
+  	----输出2
+
+函数声明和函数表达式都会被提升，但是函数声明是在函数表达式之前被提升，也叫函数优先

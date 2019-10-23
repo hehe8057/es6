@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>异步操作的同步化</title>
+	<script>
+	let $ = {
+		// 基于promise的异步操作的封装
+		get(url){
+			// 将异步操作封装到一个承诺对象中
+			return new Promise((resolve,reject)=>{
+				let xhr = new XMLHttpRequest();
+				xhr.open("GET",url);
+				xhr.responseType = "json";
+				xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+				xhr.send();
+				xhr.onreadystatechange = function(){
+					if(this.readyState === 4){
+						if(this.status === 200){
+							// 承诺成功
+							resolve(this.response)
+						} else {
+							// 承诺失败
+							reject(this)
+						}
+					}
+				}
+			})
+		}
+	}
+	
+	// vue 中可以使用 vuex
+	async function foo(){
+		let customers = await $.get("http://134.175.100.63:6677/customer/findAll")
+		console.log("customers:",customers);
+		let id = customers.data[0].id;
+		let addresses = await $.get("http://134.175.100.63:6677/address/findByCustomerId?id="+id)
+		console.log("addresses",addresses);
+		return [customers,addresses];
+	}
+
+	let f = foo();	//promise
+	f.then((result)=>{
+		console.log("end",result);
+	})
+
+
+
+
+
+
+
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象的指针</title>
+</head>
+<body>
+	<!-- 一个对象，它的指针只能指向一个堆内存，但是一个堆内存可以被多个指针指向 -->
+	<script>
+		function info(info){
+			info.age++;
+			info = {
+				name:'test',
+				age:23
+			}
+			console.log(info.age,'---');
+		}
+		obj = {
+			name:'xpf',
+			age:23
+		}
+		obj.age++;
+		info(obj);
+		console.log(obj.age);
+	</script>
+</body>
+</html>

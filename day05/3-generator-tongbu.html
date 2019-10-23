@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>异步操作的同步化</title>
+	<script>
+	let $ = {
+		// 基于promise的异步操作的封装
+		get(url){
+			// 将异步操作封装到一个承诺对象中
+			return new Promise((resolve,reject)=>{
+				let xhr = new XMLHttpRequest();
+				xhr.open("GET",url);
+				xhr.responseType = "json";
+				xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+				xhr.send();
+				xhr.onreadystatechange = function(){
+					if(this.readyState === 4){
+						if(this.status === 200){
+							// 承诺成功
+							resolve(this.response)
+						} else {
+							// 承诺失败
+							reject(this)
+						}
+					}
+				}
+			})
+		}
+	}
+	function* foo(){
+		let c_url = "http://134.175.100.63:6677/customer/findAll";
+		let customers = yield call($.get,c_url);
+		console.log("customer:",customers);
+
+		let o_url = "http://134.175.100.63:6677/order/findAll";
+		let orders = yield call($.get,o_url);
+		console.log("order",orders);
+	}
+
+	// 先查询出所有的顾客信息，找到第一个顾客信息的id然后根据该id再查询该顾客的地址信息
+	function* bar(){
+		let customers = yield call($.get,"http://134.175.100.63:6677/customer/findAll")
+		console.log("所有顾客：",customers);
+		let id = customers.data[0].id;
+		let address = yield call($.get,"http://134.175.100.63:6677/address/findByCustomerId?id="+id)
+		console.log("地址信息：",id,address)
+	}
+
+	function call(handler,params){
+		handler(params)
+		.then((response)=>{
+			// 参数作为上一个yield表达式的返回值
+			iterator.next(response)
+		})
+	}
+	let iterator = bar();
+	iterator.next();
+
+
+
+
+	/*
+	$.get("http://134.175.100.63:6677/customer/findAll")
+	.then((response)=>{
+		console.log("customers:",response);
+	})
+	.catch(()=>{
+		alert("接口异常");
+	})
+
+	$.get("http://134.175.100.63:6677/order/findAll")
+	.then((response)=>{
+		console.log("customers:",response);
+	})
+	.catch(()=>{
+		alert("接口异常");
+	})
+	*/
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

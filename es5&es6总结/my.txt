@@ -1,0 +1,152 @@
+---es5---
+1、javascript组成
+2、变量的声明、初始化、使用
+3、数据类型
+	基本数据类型
+	引用数据类型
+	如何检测数据类型
+	基本数据类型和引用数据类型在内存中的表示
+4、操作符
+	++a;
+	a++;
+	==
+	===
+	exp1?exp2:exp3
+5、类型转换
+	其他类型转换为number
+	其他类型转换为boolean
+	其他类型转换为string
+6、流程控制语句
+	if(){
+
+	}
+	if(){
+
+	}else{
+
+	}
+	switch(){
+		case:
+	}
+
+	for(){
+
+	}
+	while(){
+
+	}
+	do{
+
+	}while()
+
+7、对象的定义
+8、对象属性的访问
+9、对象的遍历
+	for-in
+10、函数的定义
+	函数声明
+	函数表达式
+
+	函数声明和变量声明会提升
+11、函数的调用
+12、函数内部属性
+	形参
+	arguments
+	this
+
+	类数组对象转换为数组的方式
+13、数组的定义
+	数组去重的方式
+14、数组的访问
+15、数组遍历
+	for(){}
+	while
+	do-while
+	增强for循环
+16、数组API
+	push、pop、unshift、shift
+	...
+17、迭代方法
+	forEach()
+	重构(使用回调函数)
+	课后作业(水仙花数、素数...)
+18、包装器类型
+	String.prototype.xxx
+		charAt()
+		indexOf()
+		...
+19、Math对象
+20、正则表达式的定义
+	构造函数模式
+	正则表达式字面量
+
+	[abc]与abc的区别
+	分组与循环的用法
+	贪婪匹配与非贪婪匹配
+	在使用/的时候，需要进行转义，即 \/\/
+	模式
+	方法
+		test()
+		exec()
+21、封装
+	工厂函数模式
+	构造函数模式
+	构造函数与原型相结合
+22、继承
+	原型链继承
+	借用构造函数
+23、DOM API
+	Node
+		appendChild()
+		insertBefore()
+		replaceChild(new,old)
+		removeChild()
+		cloneNode()
+	Document
+		getElementById()
+		getElementsByClassName();
+		getElementsByTagName()
+		getElementsByName()
+
+		querySelector(选择器)
+		querySelectorAll(选择器)
+	Element
+		getAttribute(key)
+		setAttribute(key,val)
+		querySelector(选择器)
+		querySelectorAll(选择器)
+24、事件
+	1）阻止默认行为的方式
+	2）事件类型
+		mouseover	光标移到元素上，支持子元素，即事件代理
+		mouseout	光标移出元素，支持子元素，即事件代理
+
+		mouseenter	光标移到元素上，不支持子元素
+		mouseleave  光标移出元素，不支持子元素
+	3）事件绑定的方式
+25、jquery的使用
+	1）DOM操作
+		创建节点
+		插入节点
+		删除节点
+		清空节点
+	2）事件
+		事件代理
+		事件绑定方式
+	3）ajax
+
+---es6---
+1、变量
+2、解构
+	数组解构
+	对象解构
+	结构默认值
+3、对象字面量的简写
+4、函数声明的简写
+	教头函数
+5、rest操作符
+6、数组新特性
+	Array.from()
+	Array.of()
+	Set
+	Map

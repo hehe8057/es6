@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		// 基于回调函数的异步操作的封装
+		function get_callback(url,successHandler,errorHandler){
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET",url);
+			xhr.responseType = "json";
+			xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+			xhr.send();
+			xhr.onreadystatechange = function(){
+				if(this.readyState === 4){
+					if(this.status === 200){
+						successHandler(this.response)
+					} else {
+						errorHandler(this)
+					}
+				}
+			}
+		}
+
+		// 基于promise的异步操作的封装
+		function get_promise(url){
+			// 将异步操作封装到一个承诺对象中
+			return new Promise((resolve,reject)=>{
+				let xhr = new XMLHttpRequest();
+				xhr.open("GET",url);
+				xhr.responseType = "json";
+				xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+				xhr.send();
+				xhr.onreadystatechange = function(){
+					if(this.readyState === 4){
+						if(this.status === 200){
+							// 承诺成功
+							resolve(this.response)
+						} else {
+							// 承诺失败
+							reject(this)
+						}
+					}
+				}
+			})
+		}
+
+		let url = "http://134.175.100.63:6677/customer/findAll";
+		let $_ajax = $.get(url);
+		console.log($_ajax)
+		let p = Promise.resolve($_ajax);
+		p.then((result)=>{
+			console.log("result:",result);
+		})
+
+		let obj = {
+			name:"terry",
+			then:function(){
+				console.log("-----");
+				return "thenable"
+			}
+		}
+
+		let p2 = Promise.resolve(obj);
+		console.log("p2:",p2);
+		
+
+
+		/*
+		let url1 = "http://134.175.100.63:6677/customer/findAll";
+		let url2 = "http://134.175.100.63:6677/order/findAll";
+		let url3 = "http://134.175.100.63:6677/address/findAll1";
+
+		let p1 = get_promise(url1);
+		let p2 = get_promise(url2);
+		let p3 = get_promise(url3);
+
+		
+		let p = Promise.race([p1,p2,p3]);
+		p.then((result)=>{
+			console.log("有承诺成功",result);
+		})
+		.catch((error)=>{
+			console.log("出现问题",error);
+		})
+		*/
+		
+		/*
+		let p = Promise.all([p1,p2,p3]);
+		p.then((result)=>{
+			console.log("全部成功",result);
+		})
+		.catch((error)=>{
+			console.log("出现问题",error);
+		})
+		*/
+
+		/*
+		get_callback(url,function(result){
+			console.log("success",result);
+		},function(){
+			alert("请求异常");
+		})
+		*/
+
+		/*
+		get_promise(url)
+		.then((result)=>{ 
+			console.log("请求成功1：",result);
+			return result;
+		})
+		.catch(()=>{
+			alert("请求异常");
+		})
+		.finally(()=>{
+			alert("请求结束");
+		})
+		*/
+
+
+
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
